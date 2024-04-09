@@ -87,6 +87,27 @@ loss, accuracy = model.evaluate(test_generator)
 print(f"Test accuracy: {accuracy*100}%")
 
 
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+import numpy as np
+
+# 加载模型
+model = load_model('path_to_your_model.h5')
+
+# 加载要预测的图像
+img = image.load_img('path_to_your_image.jpg', target_size=(224, 224))  # 调整图像大小与模型输入相匹配
+img_array = image.img_to_array(img)  # 将图像转换为数组
+img_array = np.expand_dims(img_array, axis=0)  # 增加一个维度，因为模型预期的是批次数据
+img_array = img_array / 255.0  # 归一化
+
+# 进行预测
+predictions = model.predict(img_array)
+
+# 输出预测结果
+# 根据实际情况，您可能需要进一步处理 predictions 以得到有意义的输出
+print(predictions)
+
 
 # CNN模型的层结构：
 # 输入层：接收原始数据（例如图像）。
